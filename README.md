@@ -2,14 +2,6 @@
 
 A lightweight WordPress plugin that adds a collection of custom Gutenberg blocks to the editor. No settings pages, no bloat — just blocks.
 
-## Features
-
-- ✅ Easy to use, no configuration required
-- 🧩 Includes the following blocks:
-  - Block Name 1 – brief description
-  - Block Name 2 – brief description
-  - Block Name 3 – brief description
-
 ## Pre-requisites
 
 **To use this plugin, you’ll need:**
