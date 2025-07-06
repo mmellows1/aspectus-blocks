@@ -1,6 +1,6 @@
 # Gutenberg Blocks Plugin
 
-A lightweight WordPress plugin that adds a collection of custom Gutenberg blocks to the editor. No settings pages, no bloat — just blocks.
+A lightweight WordPress plugin that adds a collection of custom Gutenberg blocks to the editor.
 
 ## Pre-requisites
 
