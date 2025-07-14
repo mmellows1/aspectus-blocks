@@ -42,7 +42,7 @@ export default ({ attributes, setAttributes }) => {
         <NumberControl
           label="Profit per unit step"
           help="Set how much the profit per unit range steps between each unit (default 0.1)"
-          value={attributes.unitStep}
+          value={attributes?.unitStep}
           onChange={(unitStep) => setAttributes({ unitStep })}
         />
       </PanelBody>

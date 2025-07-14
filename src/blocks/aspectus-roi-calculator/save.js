@@ -17,25 +17,24 @@ import countryCodes from "@library/country-codes";
  * @return {Element} Element to render.
  */
 
-const CurrencyInput = ({ name, value, ...inputProps }) => {
+const CurrencyInput = ({ name, value, step, ...inputProps }) => {
   return (
     <div data-element={name}>
-      <RichText.Content
-        value={value}
-        as="label"
-        className="wp-block-create-block-roi-calculator__form-label"
-      />
+      <label className="wp-block-create-block-roi-calculator__form-label">
+        {value}
+      </label>
       <div className="wp-block-create-block-roi-calculator__form-group wp-block-create-block-roi-calculator__form-group--compact">
         <select className="wp-block-create-block-roi-calculator__currency-select">
-          {countryCodes.map(({ value, symbol }) => (
-            <option value={value}>
-              {symbol} {value}
+          {countryCodes.map(({ code, symbol }) => (
+            <option value={code}>
+              {symbol} {code}
             </option>
           ))}
         </select>
         <input
           {...inputProps}
           type="number"
+          step={step}
           className="wp-block-create-block-roi-calculator__currency-input"
           value={2.0}
           pattern="^\d*(\.\d{0,2})?$"
@@ -44,20 +43,25 @@ const CurrencyInput = ({ name, value, ...inputProps }) => {
     </div>
   );
 };
-const NumberInput = ({ name, value, placeholder, ...inputProps }) => {
+const NumberInput = ({
+  name,
+  value,
+  defaultValue,
+  placeholder,
+  step,
+  ...inputProps
+}) => {
   return (
     <div data-element={name}>
-      <RichText.Content
-        as="label"
-        value={value}
-        className="wp-block-create-block-roi-calculator__form-label"
-      />
+      <label className="wp-block-create-block-roi-calculator__form-label">
+        {value}
+      </label>
       <div className="wp-block-create-block-roi-calculator__form-group">
         <input
           {...inputProps}
           type="number"
           className="wp-block-create-block-roi-calculator__number-input"
-          value={22500}
+          value={defaultValue}
         />
       </div>
     </div>
@@ -67,11 +71,12 @@ const NumberInput = ({ name, value, placeholder, ...inputProps }) => {
 const RangeSlider = ({ name, value, onChange, placeholder, ...inputProps }) => {
   return (
     <div data-element={name}>
-      <RichText.Content
+      <label
         as="label"
-        value={value}
         className="wp-block-create-block-roi-calculator__form-label"
-      />
+      >
+        {value}
+      </label>
       <div className="wp-block-create-block-roi-calculator__form-group">
         <input
           {...inputProps}
@@ -94,6 +99,7 @@ export default function save({ attributes }) {
         className: "wp-block-create-block-roi-calculator",
       })}
       data-element="aspectus-roi-calculator"
+      data-base-currency={attributes?.baseCurrency}
     >
       <div className="wp-block-create-block-roi-calculator__box wp-block-create-block-roi-calculator__box--top">
         <RangeSlider
@@ -102,33 +108,46 @@ export default function save({ attributes }) {
           value={attributes?.percentageIncrease}
           name="percentageIncrease"
         />
-        <RangeSlider min={1} max={24} value={attributes?.hours} name="hours" />
-        <RangeSlider min={1} max={7} value={attributes?.days} name="days" />
+        <RangeSlider min={0} max={24} value={attributes?.hours} name="hours" />
+        <RangeSlider min={0} max={7} value={attributes?.days} name="days" />
         <RangeSlider
           min={1}
           max={52}
           value={attributes?.weeksPerYear}
           name="weeksPerYear"
         />
-        <NumberInput value={attributes?.unitsPerHour} name="unitsPerHour" />
-        <CurrencyInput value={attributes?.profitPerUnit} name="profitPerUnit" />
+        <NumberInput
+          value={attributes?.unitsPerHour}
+          step={attributes?.unitStep}
+          name="unitsPerHour"
+          defaultValue={22500}
+        />
+        <CurrencyInput
+          step={attributes.unitStep}
+          value={attributes?.profitPerUnit}
+          name="profitPerUnit"
+        />
       </div>
       <div className="wp-block-create-block-roi-calculator__box wp-block-create-block-roi-calculator__box--bottom">
         <div className="wp-block-create-block-roi-calculator__grid wp-block-create-block-roi-calculator__grid--top">
           <div data-element="profitPerYear">
-            <RichText.Content
+            <p
               value={attributes.profitPerYear}
               className="wp-block-create-block-roi-calculator__calculation-label"
-            />
+            >
+              {attributes.profitPerYear}
+            </p>
             <span className="wp-block-create-block-roi-calculator__calculation-value">
               1,404,000.00
             </span>
           </div>
           <div data-element="unitsPerYear">
-            <RichText.Content
+            <p
               value={attributes.unitsPerYear}
               className="wp-block-create-block-roi-calculator__calculation-label"
-            />
+            >
+              {attributes.unitsPerYear}
+            </p>
             <span className="wp-block-create-block-roi-calculator__calculation-value">
               702,000
             </span>

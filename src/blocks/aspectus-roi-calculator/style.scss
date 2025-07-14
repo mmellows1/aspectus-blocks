@@ -37,6 +37,7 @@
   &__form-label {
     color: #fff;
     margin-bottom: 0.8rem;
+    display: block;
   }
 
   &__range-input {
@@ -46,7 +47,12 @@
     margin-top: 12px;
     border-radius: 8px;
     width: 100%;
-    flex: 0 0 90%;
+    flex: 0 1 100%;
+
+    &:focus {
+      outline: none;
+      border: none;
+    }
 
     &::-webkit-slider-thumb {
       appearance: none;
@@ -61,7 +67,8 @@
 
   &__range-value {
     color: #fff;
-    justify-self: flex-end;
+    flex: 0 1 10%;
+    text-align: right;
   }
 
   &__currency-select {

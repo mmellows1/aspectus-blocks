@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "@wordpress/element";
 import { getSymbol } from "../../lib/country-codes";
 import BlockSettings from "./BlockSettings";
 import "./editor.scss";
+import { formatUnits } from "../../helpers/formatter";
 
 const CurrencyInput = ({
   value,
@@ -24,15 +25,6 @@ const CurrencyInput = ({
     if (onInputChange) {
       onInputChange(e);
     }
-  };
-
-  const formatValue = (value) => {
-    const number = parseFloat(value);
-    if (isNaN(number)) return "";
-    return number.toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
   };
 
   return (
@@ -62,7 +54,7 @@ const CurrencyInput = ({
           type="number"
           min={0}
           className="wp-block-create-block-roi-calculator__currency-input"
-          value={formatValue(currencyValue)}
+          value={formatUnits(currencyValue)}
           pattern="^\d*(\.\d{0,2})?$"
         />
       </div>
@@ -311,7 +303,7 @@ export default function Edit({ attributes, setAttributes }) {
               placeholder="Enter a label (e.g. Profit per year)"
               value={attributes.profitPerYear}
               className="wp-block-create-block-roi-calculator__calculation-label"
-              onChange={(value) => onChange(value)}
+              onChange={(profitPerYear) => setAttributes({ profitPerYear })}
             />
             <span className="wp-block-create-block-roi-calculator__calculation-value">
               {symbol} {roi?.profitPerYear}
@@ -322,7 +314,7 @@ export default function Edit({ attributes, setAttributes }) {
               placeholder="Enter a label (e.g. Units per year)"
               value={attributes.unitsPerYear}
               className="wp-block-create-block-roi-calculator__calculation-label"
-              onChange={(value) => onChange(value)}
+              onChange={(unitsPerYear) => setAttributes({ unitsPerYear })}
             />
             <span className="wp-block-create-block-roi-calculator__calculation-value">
               {roi?.unitsPerYear}

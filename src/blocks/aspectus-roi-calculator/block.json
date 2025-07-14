@@ -54,7 +54,7 @@
       "default": 8
     },
     "unitStep": {
-      "type": "number",
+      "type": "string",
       "default": 0.1
     }
   },
