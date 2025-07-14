@@ -1,14 +1,18 @@
 const defaultConfig = require("@wordpress/scripts/config/webpack.config");
-const { getWebpackEntryPoints } = require("@wordpress/scripts/utils/config");
+const path = require("path");
 
-module.exports = async () => {
-  const dynamicEntries = await getWebpackEntryPoints();
-
-  return {
-    ...defaultConfig,
-    // entry: {
-    //   ...dynamicEntries,
-    //   index: "./src/index.js", // Your custom file
-    // },
-  };
+module.exports = {
+  ...defaultConfig,
+  entry: {
+    ...defaultConfig.entry(),
+    helpers: "./src/scss/index.scss", // Add your custom entry point
+  },
+  resolve: {
+    ...defaultConfig.resolve,
+    alias: {
+      ...defaultConfig.alias,
+      "@helpers": path.resolve("src/helpers"),
+      "@library": path.resolve("src/lib"),
+    },
+  },
 };

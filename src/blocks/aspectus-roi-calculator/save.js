@@ -4,7 +4,8 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { RichText, useBlockProps } from "@wordpress/block-editor";
+import countryCodes from "@library/country-codes";
 
 /**
  * The save function defines the way in which the different attributes should
@@ -15,10 +16,160 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @return {Element} Element to render.
  */
-export default function save() {
-	return (
-		<p { ...useBlockProps.save() }>
-			{ 'Roi Calculator – hello from the saved content!' }
-		</p>
-	);
+
+const CurrencyInput = ({ name, value, ...inputProps }) => {
+  return (
+    <div data-element={name}>
+      <RichText.Content
+        value={value}
+        as="label"
+        className="wp-block-create-block-roi-calculator__form-label"
+      />
+      <div className="wp-block-create-block-roi-calculator__form-group wp-block-create-block-roi-calculator__form-group--compact">
+        <select className="wp-block-create-block-roi-calculator__currency-select">
+          {countryCodes.map(({ value, symbol }) => (
+            <option value={value}>
+              {symbol} {value}
+            </option>
+          ))}
+        </select>
+        <input
+          {...inputProps}
+          type="number"
+          className="wp-block-create-block-roi-calculator__currency-input"
+          value={2.0}
+          pattern="^\d*(\.\d{0,2})?$"
+        />
+      </div>
+    </div>
+  );
+};
+const NumberInput = ({ name, value, placeholder, ...inputProps }) => {
+  return (
+    <div data-element={name}>
+      <RichText.Content
+        as="label"
+        value={value}
+        className="wp-block-create-block-roi-calculator__form-label"
+      />
+      <div className="wp-block-create-block-roi-calculator__form-group">
+        <input
+          {...inputProps}
+          type="number"
+          className="wp-block-create-block-roi-calculator__number-input"
+          value={22500}
+        />
+      </div>
+    </div>
+  );
+};
+
+const RangeSlider = ({ name, value, onChange, placeholder, ...inputProps }) => {
+  return (
+    <div data-element={name}>
+      <RichText.Content
+        as="label"
+        value={value}
+        className="wp-block-create-block-roi-calculator__form-label"
+      />
+      <div className="wp-block-create-block-roi-calculator__form-group">
+        <input
+          {...inputProps}
+          type="range"
+          className="wp-block-create-block-roi-calculator__range-input"
+          onChange={(e) => setRangeValue(e.target.value)}
+        />
+        <span className="wp-block-create-block-roi-calculator__range-value">
+          0
+        </span>
+      </div>
+    </div>
+  );
+};
+
+export default function save({ attributes }) {
+  return (
+    <div
+      {...useBlockProps.save({
+        className: "wp-block-create-block-roi-calculator",
+      })}
+      data-element="aspectus-roi-calculator"
+    >
+      <div className="wp-block-create-block-roi-calculator__box wp-block-create-block-roi-calculator__box--top">
+        <RangeSlider
+          min={0}
+          max={100}
+          value={attributes?.percentageIncrease}
+          name="percentageIncrease"
+        />
+        <RangeSlider min={1} max={24} value={attributes?.hours} name="hours" />
+        <RangeSlider min={1} max={7} value={attributes?.days} name="days" />
+        <RangeSlider
+          min={1}
+          max={52}
+          value={attributes?.weeksPerYear}
+          name="weeksPerYear"
+        />
+        <NumberInput value={attributes?.unitsPerHour} name="unitsPerHour" />
+        <CurrencyInput value={attributes?.profitPerUnit} name="profitPerUnit" />
+      </div>
+      <div className="wp-block-create-block-roi-calculator__box wp-block-create-block-roi-calculator__box--bottom">
+        <div className="wp-block-create-block-roi-calculator__grid wp-block-create-block-roi-calculator__grid--top">
+          <div data-element="profitPerYear">
+            <RichText.Content
+              value={attributes.profitPerYear}
+              className="wp-block-create-block-roi-calculator__calculation-label"
+            />
+            <span className="wp-block-create-block-roi-calculator__calculation-value">
+              1,404,000.00
+            </span>
+          </div>
+          <div data-element="unitsPerYear">
+            <RichText.Content
+              value={attributes.unitsPerYear}
+              className="wp-block-create-block-roi-calculator__calculation-label"
+            />
+            <span className="wp-block-create-block-roi-calculator__calculation-value">
+              702,000
+            </span>
+          </div>
+        </div>
+        <div className="wp-block-create-block-roi-calculator__grid wp-block-create-block-roi-calculator__grid--bottom">
+          <div data-element="hoursInAWeek">
+            <div
+              value=""
+              className="wp-block-create-block-roi-calculator__calculation-label wp-block-create-block-roi-calculator__calculation-label--small"
+            >
+              Hours in a week 24/7
+            </div>
+            <span className="wp-block-create-block-roi-calculator__calculation-value wp-block-create-block-roi-calculator__calculation-value-small">
+              60.00
+            </span>
+          </div>
+          <div data-element="extraHours">
+            <div
+              value=""
+              className="wp-block-create-block-roi-calculator__calculation-label wp-block-create-block-roi-calculator__calculation-label--small"
+            >
+              Extra hours
+            </div>
+            <span className="wp-block-create-block-roi-calculator__calculation-value wp-block-create-block-roi-calculator__calculation-value-small">
+              0.60
+            </span>
+          </div>
+          <div data-element="extraUnitsPerWeek">
+            <div
+              value=""
+              className="wp-block-create-block-roi-calculator__calculation-label wp-block-create-block-roi-calculator__calculation-label--small"
+            >
+              Extra Units per week
+            </div>
+            <span className="wp-block-create-block-roi-calculator__calculation-value wp-block-create-block-roi-calculator__calculation-value-small">
+              13,500
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }

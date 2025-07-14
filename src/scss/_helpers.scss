@@ -1,0 +1,13 @@
+$prefix: "abu";
+
+$display: (
+  "flex": flex,
+);
+
+#{$prefix} {
+  @each $key, $value in $display {
+    &-#{$key} {
+      display: $value;
+    }
+  }
+}

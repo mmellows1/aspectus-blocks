@@ -8,8 +8,43 @@
   "icon": "smiley",
   "description": "Example block scaffolded with Create Block tool.",
   "example": {},
+  "attributes": {
+    "percentageIncrease": {
+      "type": "string",
+      "default": "Percentage Increase"
+    },
+    "hours": {
+      "type": "string",
+      "default": "Hours"
+    },
+    "days": {
+      "type": "string",
+      "default": "Days"
+    },
+    "weeksPerYear": {
+      "type": "string",
+      "default": "Weeks per year"
+    },
+    "unitsPerHour": {
+      "type": "string",
+      "default": "Units per hour"
+    },
+    "profitPerYear": {
+      "type": "string",
+      "default": "Profit per year"
+    },
+    "unitsPerYear": {
+      "type": "string",
+      "default": "Units per year"
+    },
+    "profitPerUnit": {
+      "type": "string",
+      "default": "Profit per unit"
+    }
+  },
   "supports": {
-    "html": false
+    "html": false,
+    "align": true
   },
   "textdomain": "roi-calculator",
   "editorScript": "file:./index.js",

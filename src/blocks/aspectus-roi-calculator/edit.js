@@ -1,38 +1,355 @@
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
- */
 import { __ } from "@wordpress/i18n";
-
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
- */
-import { useBlockProps } from "@wordpress/block-editor";
-
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
+import { RichText, useBlockProps } from "@wordpress/block-editor";
+import calculateRoi from "@helpers/calculate-roi";
+import { Fragment, useEffect, useRef, useState } from "@wordpress/element";
+import countryCodes from "@library/country-codes";
 import "./editor.scss";
+import { getSymbol } from "../../lib/country-codes";
 
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
- *
- * @return {Element} Element to render.
- */
-export default function Edit() {
+const CurrencyInput = ({
+  value,
+  onChange,
+  placeholder,
+  currencySelectName,
+  onInputChange,
+  defaultCurrencyValue,
+  ...inputProps
+}) => {
+  const [currencyValue, setCurrencyValue] = useState(defaultCurrencyValue);
+
+  const handleInputChange = (e) => {
+    setCurrencyValue(e.target.value);
+    if (onInputChange) {
+      onInputChange(e);
+    }
+  };
+
   return (
-    <p {...useBlockProps()}>
-      {__("Roi Calculator – hello from the editor!", "roi-calculator")}
-    </p>
+    <div>
+      <RichText
+        placeholder={placeholder}
+        value={value}
+        className="wp-block-create-block-roi-calculator__form-label"
+        onChange={(value) => onChange(value)}
+      />
+      <div className="wp-block-create-block-roi-calculator__form-group wp-block-create-block-roi-calculator__form-group--compact">
+        <select
+          name={currencySelectName}
+          defaultValue={value}
+          className="wp-block-create-block-roi-calculator__currency-select"
+          onChange={handleInputChange}
+        >
+          {countryCodes.map(({ code, symbol }) => (
+            <option value={code}>
+              {symbol} {code}
+            </option>
+          ))}
+        </select>
+        <input
+          {...inputProps}
+          onChange={onInputChange}
+          type="number"
+          className="wp-block-create-block-roi-calculator__currency-input"
+          defaultValue={2}
+          pattern="^\d*(\.\d{0,2})?$"
+        />
+      </div>
+    </div>
+  );
+};
+const NumberInput = ({
+  value,
+  onChange,
+  placeholder,
+  defaultNumberValue,
+  onInputChange,
+  ...inputProps
+}) => {
+  const [numberValue, setNumberValue] = useState(defaultNumberValue);
+  const handleInputChange = (e) => {
+    setNumberValue(e.target.value);
+    if (onInputChange) {
+      onInputChange(e);
+    }
+  };
+
+  return (
+    <div>
+      <RichText
+        placeholder={placeholder}
+        value={value}
+        className="wp-block-create-block-roi-calculator__form-label"
+        onChange={(value) => onChange(value)}
+      />
+      <div className="wp-block-create-block-roi-calculator__form-group">
+        <input
+          {...inputProps}
+          value={numberValue}
+          onChange={handleInputChange}
+          type="number"
+          className="wp-block-create-block-roi-calculator__number-input"
+          defaultValue={22500}
+        />
+      </div>
+    </div>
+  );
+};
+
+const RangeSlider = ({
+  value,
+  onChange,
+  placeholder,
+  min,
+  onInputChange,
+  defaultRangeValue,
+  max,
+  ...inputProps
+}) => {
+  const [rangeValue, setRangeValue] = useState(defaultRangeValue);
+  const inputRef = useRef(null);
+
+  const calculateGradientPercentage = () => {
+    return (Number(rangeValue) / max) * 100;
+  };
+
+  useEffect(() => {
+    setRangeValue(inputRef.current.value);
+  }, []);
+
+  useEffect(() => {
+    const rangePercentage = calculateGradientPercentage();
+    inputRef.current.style.background = `linear-gradient(
+      to right,
+      #0affa8 0%,
+      #0affa8 ${rangePercentage}%,
+      #fff ${rangePercentage}%,
+      #fff 100%
+    )`;
+  }, [rangeValue]);
+
+  const handleInputChange = (e) => {
+    setRangeValue(e.target.value);
+    if (onInputChange) {
+      onInputChange(e);
+    }
+  };
+
+  return (
+    <div>
+      <RichText
+        placeholder={placeholder}
+        value={value}
+        className="wp-block-create-block-roi-calculator__form-label"
+        onChange={(value) => onChange(value)}
+      />
+      <div className="wp-block-create-block-roi-calculator__form-group">
+        <input
+          {...inputProps}
+          min={min}
+          max={max}
+          ref={inputRef}
+          value={rangeValue}
+          onChange={handleInputChange}
+          type="range"
+          className="wp-block-create-block-roi-calculator__range-input"
+        />
+        <span className="wp-block-create-block-roi-calculator__range-value">
+          {rangeValue}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+export default function Edit({ attributes, setAttributes }) {
+  const [matrix, setMatrix] = useState({
+    percentageIncrease: 50,
+    hours: 18,
+    days: 5,
+    weeksPerYear: 50,
+    unitsPerHour: 22500,
+    profitPerUnit: 2.0,
+    rate: 1,
+    currency: "GBP",
+  });
+  const [symbol, setSymbol] = useState(getSymbol(matrix.currency));
+  const [roi, setRoi] = useState(calculateRoi(matrix));
+
+  const handleInputChange = (e) => {
+    setMatrix({
+      ...matrix,
+      [e.target.name]:
+        e.target.type === "number" || e.target.type === "range"
+          ? Number(e.target.value)
+          : e.target.value,
+    });
+  };
+
+  useEffect(() => {
+    setRoi(calculateRoi(matrix));
+  }, [JSON.stringify(matrix)]);
+
+  useEffect(() => {
+    fetch(`https://api.exchangerate-api.com/v4/latest/GBP`)
+      .then((res) => res.json())
+      .then((currency) => {
+        let rate = currency.rates[matrix.currency];
+        setSymbol(getSymbol(matrix.currency));
+        setMatrix({
+          ...matrix,
+          rate,
+        });
+      });
+  }, [matrix.currency]);
+
+  return (
+    <div
+      {...useBlockProps({ className: "wp-block-create-block-roi-calculator" })}
+    >
+      <div className="wp-block-create-block-roi-calculator__box wp-block-create-block-roi-calculator__box--top">
+        <RangeSlider
+          min={0}
+          max={100}
+          name="percentageIncrease"
+          value={attributes?.percentageIncrease}
+          placeholder="Enter a label (e.g. Percentage Increase)"
+          defaultRangeValue={matrix.percentageIncrease}
+          onChange={(value) => {
+            setAttributes({
+              percentageIncrease: value,
+            });
+          }}
+          onInputChange={handleInputChange}
+        />
+        <RangeSlider
+          min={0}
+          max={24}
+          name="hours"
+          value={attributes?.hours}
+          placeholder="Enter a label (e.g. Hours)"
+          defaultRangeValue={matrix.hours}
+          onChange={(value) => {
+            setAttributes({
+              hours: value,
+            });
+          }}
+          onInputChange={handleInputChange}
+        />
+        <RangeSlider
+          min={0}
+          max={7}
+          name="days"
+          value={attributes?.days}
+          defaultRangeValue={matrix.days}
+          placeholder="Enter a label (e.g. Days)"
+          onChange={(value) => {
+            setAttributes({
+              days: value,
+            });
+          }}
+          onInputChange={handleInputChange}
+        />
+        <RangeSlider
+          min={0}
+          max={52}
+          name="weeksPerYear"
+          value={attributes?.weeksPerYear}
+          defaultRangeValue={matrix.weeksPerYear}
+          placeholder="Enter a label (e.g. Weeks per year)"
+          onChange={(value) => {
+            setAttributes({
+              weeksPerYear: value,
+            });
+          }}
+          onInputChange={handleInputChange}
+        />
+        <NumberInput
+          name="unitsPerHour"
+          value={attributes?.unitsPerHour}
+          placeholder="Enter a label (e.g. Units per hour)"
+          onChange={(value) => {
+            setAttributes({
+              unitsPerHour: value,
+            });
+          }}
+          onInputChange={handleInputChange}
+        />
+        <CurrencyInput
+          name="profitPerUnit"
+          currencySelectName="currency"
+          value={attributes?.profitPerUnit}
+          step={0.01}
+          defaultCurrencyValue={matrix.profitPerUnit}
+          placeholder="Enter a label (e.g. Profit per unit)"
+          onChange={(value) => {
+            setAttributes({
+              profitPerUnit: value,
+            });
+          }}
+          onInputChange={handleInputChange}
+        />
+      </div>
+      <div className="wp-block-create-block-roi-calculator__box wp-block-create-block-roi-calculator__box--bottom">
+        <div className="wp-block-create-block-roi-calculator__grid wp-block-create-block-roi-calculator__grid--top">
+          <div className="">
+            <RichText
+              placeholder="Enter a label (e.g. Profit per year)"
+              value={attributes.profitPerYear}
+              className="wp-block-create-block-roi-calculator__calculation-label"
+              onChange={(value) => onChange(value)}
+            />
+            <span className="wp-block-create-block-roi-calculator__calculation-value">
+              {symbol} {roi?.profitPerYear}
+            </span>
+          </div>
+          <div className="">
+            <RichText
+              placeholder="Enter a label (e.g. Units per year)"
+              value={attributes.unitsPerYear}
+              className="wp-block-create-block-roi-calculator__calculation-label"
+              onChange={(value) => onChange(value)}
+            />
+            <span className="wp-block-create-block-roi-calculator__calculation-value">
+              {roi?.unitsPerYear}
+            </span>
+          </div>
+        </div>
+        <div className="wp-block-create-block-roi-calculator__grid wp-block-create-block-roi-calculator__grid--bottom">
+          <div className="">
+            <div
+              value=""
+              className="wp-block-create-block-roi-calculator__calculation-label wp-block-create-block-roi-calculator__calculation-label--small"
+            >
+              Hours in a week 24/7
+            </div>
+            <span className="wp-block-create-block-roi-calculator__calculation-value wp-block-create-block-roi-calculator__calculation-value-small">
+              {roi?.hoursInAWeek}
+            </span>
+          </div>
+          <div className="">
+            <div
+              value=""
+              className="wp-block-create-block-roi-calculator__calculation-label wp-block-create-block-roi-calculator__calculation-label--small"
+            >
+              Extra hours
+            </div>
+            <span className="wp-block-create-block-roi-calculator__calculation-value wp-block-create-block-roi-calculator__calculation-value-small">
+              {roi?.extraHours}
+            </span>
+          </div>
+          <div className="">
+            <div
+              value=""
+              className="wp-block-create-block-roi-calculator__calculation-label wp-block-create-block-roi-calculator__calculation-label--small"
+            >
+              Extra Units per week
+            </div>
+            <span className="wp-block-create-block-roi-calculator__calculation-value wp-block-create-block-roi-calculator__calculation-value-small">
+              {roi?.extraUnitsPerWeek}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

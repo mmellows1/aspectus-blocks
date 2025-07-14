@@ -38,9 +38,16 @@ function create_block_aspectus_blocks_init() {
 		__DIR__ . '/build/blocks' // Path to your block directory (if already registered)
 	);
 }
+
 add_action( 'init', 'create_block_aspectus_blocks_init' );
 
-function aspectus_blocks_enqueue_scripts() {
-	wp_enqueue_style( 'aspectus-blocks-style', plugins_url( 'buiindex.css', __FILE__ ) );
+
+function aspectus_blocks_block_editor_styles() {
+    wp_enqueue_style(
+        'aspectus_blocks-editor-styles',
+        plugins_url('build/helpers.css', __FILE__),
+        array(),
+        wp_get_theme()->get('Version')
+    );
 }
-add_action( 'wp_enqueue_scripts', 'aspectus_blocks_enqueue_scripts' );
+add_action('enqueue_block_editor_assets', 'aspectus_blocks_block_editor_styles');
