@@ -1,16 +1,30 @@
+import colors, { colorSchemes } from "@library/colors";
+import countryCodes from "@library/country-codes";
 import { InspectorControls } from "@wordpress/block-editor";
 import {
-  PanelBody,
-  SelectControl,
-  RangeControl,
+  DuotonePicker,
   __experimentalNumberControl as NumberControl,
+  PanelBody,
+  RangeControl,
+  SelectControl,
 } from "@wordpress/components";
-import countryCodes from "@library/country-codes";
+import { colorThemes } from "../../lib/colors";
 
 export default ({ attributes, setAttributes }) => {
   return (
     <InspectorControls>
       <PanelBody title="Settings">
+        <SelectControl
+          defaultValue={attributes.theme}
+          label="Theme"
+          help="Select a theme for the calculator"
+          options={colorThemes}
+          onChange={(theme) => {
+            setAttributes({
+              theme,
+            });
+          }}
+        />
         <SelectControl
           __next40pxDefaultSize
           __nextHasNoMarginBottom

@@ -56,6 +56,10 @@
     "unitStep": {
       "type": "string",
       "default": 0.1
+    },
+    "theme": {
+      "type": "string",
+      "default": "mint"
     }
   },
   "supports": {

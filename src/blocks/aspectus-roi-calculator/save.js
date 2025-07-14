@@ -96,7 +96,10 @@ export default function save({ attributes }) {
   return (
     <div
       {...useBlockProps.save({
-        className: "wp-block-create-block-roi-calculator",
+        className: [
+          "wp-block-create-block-roi-calculator",
+          `wp-block-create-block-roi-calculator--theme-${attributes?.theme}`,
+        ].join(" "),
       })}
       data-element="aspectus-roi-calculator"
       data-base-currency={attributes?.baseCurrency}

@@ -123,8 +123,8 @@ const RangeSlider = ({
     const rangePercentage = calculateGradientPercentage();
     inputRef.current.style.background = `linear-gradient(
       to right,
-      #0affa8 0%,
-      #0affa8 ${rangePercentage}%,
+      var(--secondary-color) 0%,
+      var(--secondary-color) ${rangePercentage}%,
       #fff ${rangePercentage}%,
       #fff 100%
     )`;
@@ -209,7 +209,12 @@ export default function Edit({ attributes, setAttributes }) {
 
   return (
     <div
-      {...useBlockProps({ className: "wp-block-create-block-roi-calculator" })}
+      {...useBlockProps({
+        className: [
+          "wp-block-create-block-roi-calculator",
+          `wp-block-create-block-roi-calculator--theme-${attributes.theme}`,
+        ].join(" "),
+      })}
     >
       <BlockSettings attributes={attributes} setAttributes={setAttributes} />
       <div className="wp-block-create-block-roi-calculator__box wp-block-create-block-roi-calculator__box--top">

@@ -64,8 +64,8 @@ import { getSymbol } from "../../lib/country-codes";
     const getGradientColor = (value, max) => {
       return `linear-gradient(
         to right,
-        #0affa8 0%,
-        #0affa8 ${calculateGradientPercentage(value, max)}%,
+        var(--secondary-color) 0%,
+        var(--secondary-color) ${calculateGradientPercentage(value, max)}%,
         #fff ${calculateGradientPercentage(value, max)}%,
         #fff 100%
       )`;

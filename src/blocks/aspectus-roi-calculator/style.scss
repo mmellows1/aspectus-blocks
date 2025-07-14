@@ -5,8 +5,10 @@
  * Replace them with your own styles or remove the file completely.
  */
 .wp-block-create-block-roi-calculator {
+  --primary-color: #286cfc;
+  --secondary-color: #0affa8;
   &__box {
-    background-color: #286cfc;
+    background-color: var(--primary-color);
     border-radius: 2.4rem;
     gap: 2.4rem;
     margin: 0 auto;
@@ -60,7 +62,7 @@
       width: 24px;
       height: 24px;
       border-radius: 50%;
-      background: #0affa8;
+      background: var(--secondary-color);
       cursor: pointer;
     }
   }
@@ -145,6 +147,48 @@
     font-size: 1.6rem;
     &--small {
       font-size: 1.2rem;
+    }
+  }
+
+  &--theme {
+    &-mint {
+      --primary-color: #286cfc;
+      --secondary-color: #0affa8;
+    }
+
+    &-halloween {
+      --primary-color: #ff0000;
+      --secondary-color: #fcff41;
+    }
+
+    &-forest {
+      --primary-color: #228b22; // forest green
+      --secondary-color: #8fbc8f; // dark sea green
+    }
+
+    &-sunset {
+      --primary-color: #ff6a00;
+      --secondary-color: #ffb347;
+    }
+
+    &-ocean {
+      --primary-color: #0077be;
+      --secondary-color: #00c2cb;
+    }
+
+    &-lavender {
+      --primary-color: #b57edc;
+      --secondary-color: #e6ccff;
+    }
+
+    &-cyberpunk {
+      --primary-color: #ff00c8;
+      --secondary-color: #00fff7;
+    }
+
+    &-sandstorm {
+      --primary-color: #c2b280;
+      --secondary-color: #eedd82;
     }
   }
 }
