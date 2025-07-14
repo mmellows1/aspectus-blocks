@@ -6,6 +6,8 @@ import { getSymbol } from "../../lib/country-codes";
 import BlockSettings from "./BlockSettings";
 import "./editor.scss";
 import { formatUnits } from "../../helpers/formatter";
+import { edit, Icon } from "@wordpress/icons";
+import { Flex, FlexBlock, FlexItem } from "@wordpress/components";
 
 const CurrencyInput = ({
   value,
@@ -29,12 +31,19 @@ const CurrencyInput = ({
 
   return (
     <div>
-      <RichText
-        placeholder={placeholder}
-        value={value}
-        className="wp-block-create-block-roi-calculator__form-label"
-        onChange={(value) => onChange(value)}
-      />
+      <Flex align="center" justify="start">
+        <FlexItem>
+          <RichText
+            placeholder={placeholder}
+            value={value}
+            className="wp-block-create-block-roi-calculator__form-label"
+            onChange={(value) => onChange(value)}
+          />
+        </FlexItem>
+        <FlexItem>
+          <Icon icon={edit} fill="white" />
+        </FlexItem>
+      </Flex>
       <div className="wp-block-create-block-roi-calculator__form-group wp-block-create-block-roi-calculator__form-group--compact">
         <select
           name={currencySelectName}
@@ -81,12 +90,19 @@ const NumberInput = ({
 
   return (
     <div>
-      <RichText
-        placeholder={placeholder}
-        value={value}
-        className="wp-block-create-block-roi-calculator__form-label"
-        onChange={(value) => onChange(value)}
-      />
+      <Flex align="center" justify="start">
+        <FlexItem>
+          <RichText
+            placeholder={placeholder}
+            value={value}
+            className="wp-block-create-block-roi-calculator__form-label"
+            onChange={(value) => onChange(value)}
+          />
+        </FlexItem>
+        <FlexItem>
+          <Icon icon={edit} fill="white" />
+        </FlexItem>
+      </Flex>
       <div className="wp-block-create-block-roi-calculator__form-group">
         <input
           {...inputProps}
@@ -142,12 +158,19 @@ const RangeSlider = ({
 
   return (
     <div>
-      <RichText
-        placeholder={placeholder}
-        value={value}
-        className="wp-block-create-block-roi-calculator__form-label"
-        onChange={(value) => onChange(value)}
-      />
+      <Flex align="center" justify="start">
+        <FlexItem>
+          <RichText
+            placeholder={placeholder}
+            value={value}
+            className="wp-block-create-block-roi-calculator__form-label"
+            onChange={(value) => onChange(value)}
+          />
+        </FlexItem>
+        <FlexItem>
+          <Icon icon={edit} fill="white" />
+        </FlexItem>
+      </Flex>
       <div className="wp-block-create-block-roi-calculator__form-group">
         <input
           {...inputProps}
@@ -308,23 +331,37 @@ export default function Edit({ attributes, setAttributes }) {
       <div className="wp-block-create-block-roi-calculator__box wp-block-create-block-roi-calculator__box--bottom">
         <div className="wp-block-create-block-roi-calculator__grid wp-block-create-block-roi-calculator__grid--top">
           <div className="">
-            <RichText
-              placeholder="Enter a label (e.g. Profit per year)"
-              value={attributes.profitPerYear}
-              className="wp-block-create-block-roi-calculator__calculation-label"
-              onChange={(profitPerYear) => setAttributes({ profitPerYear })}
-            />
+            <Flex justify="center">
+              <FlexItem>
+                <RichText
+                  placeholder="Enter a label (e.g. Profit per year)"
+                  value={attributes.profitPerYear}
+                  className="wp-block-create-block-roi-calculator__calculation-label"
+                  onChange={(profitPerYear) => setAttributes({ profitPerYear })}
+                />
+              </FlexItem>
+              <FlexItem>
+                <Icon icon={edit} fill="white" />
+              </FlexItem>
+            </Flex>
             <span className="wp-block-create-block-roi-calculator__calculation-value">
               {symbol} {roi?.profitPerYear}
             </span>
           </div>
           <div className="">
-            <RichText
-              placeholder="Enter a label (e.g. Units per year)"
-              value={attributes.unitsPerYear}
-              className="wp-block-create-block-roi-calculator__calculation-label"
-              onChange={(unitsPerYear) => setAttributes({ unitsPerYear })}
-            />
+            <Flex justify="center">
+              <FlexItem>
+                <RichText
+                  placeholder="Enter a label (e.g. Units per year)"
+                  value={attributes.unitsPerYear}
+                  className="wp-block-create-block-roi-calculator__calculation-label"
+                  onChange={(unitsPerYear) => setAttributes({ unitsPerYear })}
+                />
+              </FlexItem>
+              <FlexItem>
+                <Icon icon={edit} fill="white" />
+              </FlexItem>
+            </Flex>
             <span className="wp-block-create-block-roi-calculator__calculation-value">
               {roi?.unitsPerYear}
             </span>
