@@ -41,6 +41,7 @@ const CurrencyInput = ({
           defaultValue={value}
           className="wp-block-create-block-roi-calculator__currency-select"
           onChange={handleInputChange}
+          aria-label="Select currency"
         >
           {countryCodes.map(({ code, symbol }) => (
             <option value={code}>
@@ -56,6 +57,7 @@ const CurrencyInput = ({
           className="wp-block-create-block-roi-calculator__currency-input"
           value={formatUnits(currencyValue)}
           pattern="^\d*(\.\d{0,2})?$"
+          aria-label={placeholder}
         />
       </div>
     </div>
@@ -88,6 +90,7 @@ const NumberInput = ({
       <div className="wp-block-create-block-roi-calculator__form-group">
         <input
           {...inputProps}
+          aria-label={placeholder}
           onChange={handleInputChange}
           type="number"
           className="wp-block-create-block-roi-calculator__number-input"
@@ -154,6 +157,7 @@ const RangeSlider = ({
           value={rangeValue}
           onChange={handleInputChange}
           type="range"
+          aria-label={placeholder}
           className="wp-block-create-block-roi-calculator__range-input"
         />
         <span className="wp-block-create-block-roi-calculator__range-value">

@@ -24,7 +24,10 @@ const CurrencyInput = ({ name, value, step, ...inputProps }) => {
         {value}
       </label>
       <div className="wp-block-create-block-roi-calculator__form-group wp-block-create-block-roi-calculator__form-group--compact">
-        <select className="wp-block-create-block-roi-calculator__currency-select">
+        <select
+          className="wp-block-create-block-roi-calculator__currency-select"
+          aria-label="Select country"
+        >
           {countryCodes.map(({ code, symbol }) => (
             <option value={code}>
               {symbol} {code}
@@ -43,14 +46,7 @@ const CurrencyInput = ({ name, value, step, ...inputProps }) => {
     </div>
   );
 };
-const NumberInput = ({
-  name,
-  value,
-  defaultValue,
-  placeholder,
-  step,
-  ...inputProps
-}) => {
+const NumberInput = ({ name, value, defaultValue, step, ...inputProps }) => {
   return (
     <div data-element={name}>
       <label className="wp-block-create-block-roi-calculator__form-label">
@@ -68,7 +64,7 @@ const NumberInput = ({
   );
 };
 
-const RangeSlider = ({ name, value, onChange, placeholder, ...inputProps }) => {
+const RangeSlider = ({ name, value, onChange, ...inputProps }) => {
   return (
     <div data-element={name}>
       <label
@@ -110,47 +106,63 @@ export default function save({ attributes }) {
           max={100}
           value={attributes?.percentageIncrease}
           name="percentageIncrease"
+          aria-label={attributes?.percentageIncrease}
         />
-        <RangeSlider min={0} max={24} value={attributes?.hours} name="hours" />
-        <RangeSlider min={0} max={7} value={attributes?.days} name="days" />
+        <RangeSlider
+          min={0}
+          max={24}
+          value={attributes?.hours}
+          name="hours"
+          aria-label={attributes?.hours}
+        />
+        <RangeSlider
+          min={0}
+          max={7}
+          value={attributes?.days}
+          name="days"
+          aria-label={attributes?.days}
+        />
         <RangeSlider
           min={1}
           max={52}
           value={attributes?.weeksPerYear}
           name="weeksPerYear"
+          aria-label={attributes?.weeksPerYear}
         />
         <NumberInput
           value={attributes?.unitsPerHour}
           step={attributes?.unitStep}
           name="unitsPerHour"
           defaultValue={22500}
+          aria-label={attributes?.unitsPerHour}
         />
         <CurrencyInput
           step={attributes.unitStep}
           value={attributes?.profitPerUnit}
           name="profitPerUnit"
+          aria-label={attributes?.profitPerUnit}
         />
       </div>
       <div className="wp-block-create-block-roi-calculator__box wp-block-create-block-roi-calculator__box--bottom">
         <div className="wp-block-create-block-roi-calculator__grid wp-block-create-block-roi-calculator__grid--top">
           <div data-element="profitPerYear">
-            <p
+            <div
               value={attributes.profitPerYear}
               className="wp-block-create-block-roi-calculator__calculation-label"
             >
               {attributes.profitPerYear}
-            </p>
+            </div>
             <span className="wp-block-create-block-roi-calculator__calculation-value">
               1,404,000.00
             </span>
           </div>
           <div data-element="unitsPerYear">
-            <p
+            <div
               value={attributes.unitsPerYear}
               className="wp-block-create-block-roi-calculator__calculation-label"
             >
               {attributes.unitsPerYear}
-            </p>
+            </div>
             <span className="wp-block-create-block-roi-calculator__calculation-value">
               702,000
             </span>

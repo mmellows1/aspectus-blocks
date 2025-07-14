@@ -3,10 +3,6 @@ const path = require("path");
 
 module.exports = {
   ...defaultConfig,
-  entry: {
-    ...defaultConfig.entry(),
-    helpers: "./src/scss/index.scss", // Add your custom entry point
-  },
   resolve: {
     ...defaultConfig.resolve,
     alias: {
