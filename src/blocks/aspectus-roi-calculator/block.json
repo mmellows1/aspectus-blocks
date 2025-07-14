@@ -6,7 +6,7 @@
   "title": "Roi Calculator",
   "category": "widgets",
   "icon": "smiley",
-  "description": "Example block scaffolded with Create Block tool.",
+  "description": "The official Aspectus ROI Calculator. You can test it out here as well as the frontend!",
   "example": {},
   "attributes": {
     "percentageIncrease": {
@@ -40,6 +40,22 @@
     "profitPerUnit": {
       "type": "string",
       "default": "Profit per unit"
+    },
+    "baseCurrency": {
+      "type": "string",
+      "default": "GBP"
+    },
+    "defaultDays": {
+      "type": "number",
+      "default": 5
+    },
+    "defaultHours": {
+      "type": "number",
+      "default": 8
+    },
+    "unitStep": {
+      "type": "number",
+      "default": 0.1
     }
   },
   "supports": {

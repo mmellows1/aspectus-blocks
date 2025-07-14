@@ -1,10 +1,10 @@
-import { __ } from "@wordpress/i18n";
-import { RichText, useBlockProps } from "@wordpress/block-editor";
 import calculateRoi from "@helpers/calculate-roi";
-import { Fragment, useEffect, useRef, useState } from "@wordpress/element";
 import countryCodes from "@library/country-codes";
-import "./editor.scss";
+import { RichText, useBlockProps } from "@wordpress/block-editor";
+import { useEffect, useRef, useState } from "@wordpress/element";
 import { getSymbol } from "../../lib/country-codes";
+import BlockSettings from "./BlockSettings";
+import "./editor.scss";
 
 const CurrencyInput = ({
   value,
@@ -18,10 +18,21 @@ const CurrencyInput = ({
   const [currencyValue, setCurrencyValue] = useState(defaultCurrencyValue);
 
   const handleInputChange = (e) => {
-    setCurrencyValue(e.target.value);
+    if (e.target.type === "number") {
+      setCurrencyValue(e.target.value);
+    }
     if (onInputChange) {
       onInputChange(e);
     }
+  };
+
+  const formatValue = (value) => {
+    const number = parseFloat(value);
+    if (isNaN(number)) return "";
+    return number.toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
   };
 
   return (
@@ -47,10 +58,11 @@ const CurrencyInput = ({
         </select>
         <input
           {...inputProps}
-          onChange={onInputChange}
+          onChange={handleInputChange}
           type="number"
+          min={0}
           className="wp-block-create-block-roi-calculator__currency-input"
-          defaultValue={2}
+          value={formatValue(currencyValue)}
           pattern="^\d*(\.\d{0,2})?$"
         />
       </div>
@@ -84,7 +96,6 @@ const NumberInput = ({
       <div className="wp-block-create-block-roi-calculator__form-group">
         <input
           {...inputProps}
-          value={numberValue}
           onChange={handleInputChange}
           type="number"
           className="wp-block-create-block-roi-calculator__number-input"
@@ -164,8 +175,8 @@ const RangeSlider = ({
 export default function Edit({ attributes, setAttributes }) {
   const [matrix, setMatrix] = useState({
     percentageIncrease: 50,
-    hours: 18,
-    days: 5,
+    hours: attributes.defaultHours,
+    days: attributes.defaultDays,
     weeksPerYear: 50,
     unitsPerHour: 22500,
     profitPerUnit: 2.0,
@@ -190,7 +201,9 @@ export default function Edit({ attributes, setAttributes }) {
   }, [JSON.stringify(matrix)]);
 
   useEffect(() => {
-    fetch(`https://api.exchangerate-api.com/v4/latest/GBP`)
+    fetch(
+      `https://api.exchangerate-api.com/v4/latest/${attributes.baseCurrency}`
+    )
       .then((res) => res.json())
       .then((currency) => {
         let rate = currency.rates[matrix.currency];
@@ -200,12 +213,13 @@ export default function Edit({ attributes, setAttributes }) {
           rate,
         });
       });
-  }, [matrix.currency]);
+  }, [matrix.currency, attributes.baseCurrency]);
 
   return (
     <div
       {...useBlockProps({ className: "wp-block-create-block-roi-calculator" })}
     >
+      <BlockSettings attributes={attributes} setAttributes={setAttributes} />
       <div className="wp-block-create-block-roi-calculator__box wp-block-create-block-roi-calculator__box--top">
         <RangeSlider
           min={0}
@@ -266,6 +280,7 @@ export default function Edit({ attributes, setAttributes }) {
         <NumberInput
           name="unitsPerHour"
           value={attributes?.unitsPerHour}
+          defaultNumberValue={matrix.unitsPerHour}
           placeholder="Enter a label (e.g. Units per hour)"
           onChange={(value) => {
             setAttributes({
@@ -278,7 +293,7 @@ export default function Edit({ attributes, setAttributes }) {
           name="profitPerUnit"
           currencySelectName="currency"
           value={attributes?.profitPerUnit}
-          step={0.01}
+          step={attributes?.unitStep}
           defaultCurrencyValue={matrix.profitPerUnit}
           placeholder="Enter a label (e.g. Profit per unit)"
           onChange={(value) => {

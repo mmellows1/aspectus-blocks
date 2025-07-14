@@ -1,140 +1,143 @@
-/**
- * The following styles get applied both on the front of your site
- * and in the editor.
- *
- * Replace them with your own styles or remove the file completely.
- */
-.wp-block-create-block-roi-calculator {
-  &__box {
-    background-color: #286cfc;
-    border-radius: 2.4rem;
-    gap: 2.4rem;
-    margin: 0 auto;
-    max-width: 1024px;
-    padding: 2.4rem;
+// /**
+//  * The following styles get applied both on the front of your site
+//  * and in the editor.
+//  *
+//  * Replace them with your own styles or remove the file completely.
+//  */
+// .wp-block-create-block-roi-calculator {
+//   &__box {
+//     background-color: #286cfc;
+//     border-radius: 2.4rem;
+//     gap: 2.4rem;
+//     margin: 0 auto;
+//     max-width: 1024px;
+//     padding: 2.4rem;
 
-    &--top {
-      border-bottom: 12px solid #fff;
-      border-radius: 2.4rem 2.4rem 0 0;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-    }
+//     &--top {
+//       border-bottom: 12px solid #fff;
+//       border-radius: 2.4rem 2.4rem 0 0;
+//       display: grid;
+//       grid-template-columns: repeat(2, 1fr);
+//     }
 
-    &--bottom {
-      border-radius: 0 0 2.4rem 2.4rem;
-    }
-  }
+//     &--bottom {
+//       border-radius: 0 0 2.4rem 2.4rem;
+//     }
+//   }
 
-  &__form-group {
-    display: flex;
-    gap: 1.6rem;
+//   &__form-group {
+//     display: flex;
+//     gap: 1.6rem;
 
-    &--compact {
-      gap: 0;
-    }
-  }
+//     &--compact {
+//       gap: 0;
+//     }
+//   }
 
-  &__form-label {
-    color: #fff;
-    margin-bottom: 0.8rem;
-  }
+//   &__form-label {
+//     color: #fff;
+//     margin-bottom: 0.8rem;
+//   }
 
-  &__range-input {
-    appearance: none;
-    -webkit-appearance: none;
-    height: 8px;
-    margin-top: 12px;
-    border-radius: 8px;
+//   &__range-input {
+//     appearance: none;
+//     -webkit-appearance: none;
+//     height: 8px;
+//     margin-top: 12px;
+//     border-radius: 8px;
+//     width: 100%;
+//     flex: 0 0 90%;
 
-    &::-webkit-slider-thumb {
-      appearance: none;
-      -webkit-appearance: none;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: #0affa8;
-      cursor: pointer;
-    }
-  }
+//     &::-webkit-slider-thumb {
+//       appearance: none;
+//       -webkit-appearance: none;
+//       width: 24px;
+//       height: 24px;
+//       border-radius: 50%;
+//       background: #0affa8;
+//       cursor: pointer;
+//     }
+//   }
 
-  &__range-value {
-    color: #fff;
-    justify-self: flex-end;
-  }
+//   &__range-value {
+//     color: #fff;
+//     justify-self: flex-end;
+//   }
 
-  &__currency-select {
-    appearance: none;
-    border: none;
-    background: none;
-    border-bottom: 1px solid #fff;
-    max-width: 120px;
-    font: var(--wp--preset--font-family--manrope) 1.6rem;
-    color: #fff;
-    width: 100%;
-    &:focus,
-    &:focus-visible {
-      outline: none;
-    }
+//   &__currency-select {
+//     appearance: none;
+//     border: none;
+//     background: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>")
+//       no-repeat right 10px center;
+//     border-bottom: 1px solid #fff;
+//     max-width: 120px;
+//     font: var(--wp--preset--font-family--manrope) 1.6rem;
+//     color: #fff;
+//     width: 100%;
+//     &:focus,
+//     &:focus-visible {
+//       outline: none;
+//     }
 
-    &:after {
-      content: ">";
-      position: absolute;
-      right: 0;
-      top: 0;
-    }
-  }
+//     &:after {
+//       content: ">";
+//       position: absolute;
+//       right: 0;
+//       top: 0;
+//     }
+//   }
 
-  &__number-input,
-  &__currency-input {
-    appearance: none;
-    border: none;
-    background: none;
-    border-bottom: 1px solid #fff;
-    max-width: 320px;
-    font: var(--wp--preset--font-family--manrope) 1.6rem;
-    color: #fff;
-    width: 100%;
-    &:focus,
-    &:focus-visible {
-      outline: none;
-    }
-  }
+//   &__number-input,
+//   &__currency-input {
+//     appearance: none;
+//     border: none;
+//     background: none;
+//     border-bottom: 1px solid #fff;
+//     max-width: 320px;
+//     font: var(--wp--preset--font-family--manrope) 1.6rem;
+//     color: #fff;
+//     width: 100%;
+//     &:focus,
+//     &:focus-visible {
+//       outline: none;
+//     }
+//   }
 
-  &__grid {
-    display: grid;
-    width: 100%;
-    &--top {
-      grid-template-columns: repeat(2, 1fr);
-      text-align: center;
-      margin-bottom: 2.4rem;
-    }
+//   &__grid {
+//     display: grid;
+//     width: 100%;
+//     &--top {
+//       grid-template-columns: repeat(2, 1fr);
+//       text-align: center;
+//       margin-bottom: 2.4rem;
+//     }
 
-    &--bottom {
-      grid-template-columns: repeat(3, 1fr);
-      text-align: center;
-    }
-  }
+//     &--bottom {
+//       grid-template-columns: repeat(3, 1fr);
+//       text-align: center;
+//     }
+//   }
 
-  &__calculation-label,
-  &__calculation-value {
-    color: #fff;
-    font: var(--wp--preset--font-family--manrope) 1.6rem;
-  }
+//   &__calculation-label,
+//   &__calculation-value {
+//     color: #fff;
+//     font: var(--wp--preset--font-family--manrope) 1.6rem;
+//   }
 
-  &__calculation-label {
-    margin-bottom: 0.4rem;
-    font-size: 1.6rem;
+//   &__calculation-label {
+//     margin-bottom: 0.4rem;
+//     font-size: 1.6rem;
 
-    &--small {
-      font-size: 1.2rem;
-    }
-  }
+//     &--small {
+//       font-size: 1.2rem;
+//     }
+//   }
 
-  &__calculation-value {
-    font-weight: 600;
-    font-size: 1.6rem;
-    &--small {
-      font-size: 1.2rem;
-    }
-  }
-}
+//   &__calculation-value {
+//     font-weight: 600;
+//     font-size: 1.6rem;
+//     &--small {
+//       font-size: 1.2rem;
+//     }
+//   }
+// }

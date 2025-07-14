@@ -1067,7 +1067,6 @@ export default countryCodes;
 
 export const getSymbol = (c) => {
   const country = countryCodes.find((code) => code.code === c);
-  console.log(country);
   if (!country) return "";
 
   return country.symbol;
