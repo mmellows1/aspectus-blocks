@@ -76,13 +76,10 @@ const NumberInput = ({
   value,
   onChange,
   placeholder,
-  defaultNumberValue,
   onInputChange,
   ...inputProps
 }) => {
-  const [numberValue, setNumberValue] = useState(defaultNumberValue);
   const handleInputChange = (e) => {
-    setNumberValue(e.target.value);
     if (onInputChange) {
       onInputChange(e);
     }
@@ -110,7 +107,6 @@ const NumberInput = ({
           onChange={handleInputChange}
           type="number"
           className="wp-block-create-block-roi-calculator__number-input"
-          defaultValue={22500}
         />
       </div>
     </div>
@@ -198,7 +194,7 @@ export default function Edit({ attributes, setAttributes }) {
     days: attributes.defaultDays,
     weeksPerYear: 50,
     unitsPerHour: 22500,
-    profitPerUnit: 2.0,
+    profitPerUnit: 0.0,
     rate: 1,
     currency: "GBP",
   });
@@ -306,6 +302,7 @@ export default function Edit({ attributes, setAttributes }) {
           value={attributes?.unitsPerHour}
           defaultNumberValue={matrix.unitsPerHour}
           placeholder="Enter a label (e.g. Units per hour)"
+          defaultValue={22500}
           onChange={(value) => {
             setAttributes({
               unitsPerHour: value,

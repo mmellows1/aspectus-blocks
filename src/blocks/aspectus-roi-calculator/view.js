@@ -49,6 +49,18 @@ import { getSymbol } from "../../lib/country-codes";
       ])
     );
 
+    const ApiCall = (value) => {
+      fetch(`https://api.exchangerate-api.com/v4/latest/${baseCurrency}`)
+        .then((res) => {
+          return res.json();
+        })
+        .then((currency) => {
+          let rate = currency.rates[value];
+
+          calculate(rate);
+        });
+    };
+
     const calculatedElements = Object.fromEntries(
       config.calculatedElements.map(({ key, types }) => [
         key,
@@ -98,9 +110,6 @@ import { getSymbol } from "../../lib/country-codes";
       } = roi;
 
       Object.entries(calculatedElements).forEach(([key, el]) => {
-        // if (el.input) {
-        //   el.input.value = roi[key];
-        // } else {
         if (key == "profitPerYear") {
           el.value.textContent = `${currencySymbol} ${roi[key]}`;
         } else {
@@ -142,17 +151,10 @@ import { getSymbol } from "../../lib/country-codes";
       }
 
       if (el.currency) {
+        ApiCall(el.currency.value);
         el.currency.addEventListener("change", (e) => {
           currencySymbol = getSymbol(e.target.value);
-          fetch(`https://api.exchangerate-api.com/v4/latest/${baseCurrency}`)
-            .then((res) => {
-              return res.json();
-            })
-            .then((currency) => {
-              let rate = currency.rates[e.target.value];
-
-              calculate(rate);
-            });
+          ApiCall(e.target.value);
         });
       }
     });

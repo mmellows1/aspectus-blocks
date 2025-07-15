@@ -64,7 +64,13 @@ const NumberInput = ({ name, value, defaultValue, step, ...inputProps }) => {
   );
 };
 
-const RangeSlider = ({ name, value, onChange, ...inputProps }) => {
+const RangeSlider = ({
+  name,
+  value,
+  onChange,
+  defaultValue,
+  ...inputProps
+}) => {
   return (
     <div data-element={name}>
       <label
@@ -77,6 +83,7 @@ const RangeSlider = ({ name, value, onChange, ...inputProps }) => {
         <input
           {...inputProps}
           type="range"
+          value={defaultValue}
           className="wp-block-create-block-roi-calculator__range-input"
           onChange={(e) => setRangeValue(e.target.value)}
         />
@@ -112,6 +119,7 @@ export default function save({ attributes }) {
           min={0}
           max={24}
           value={attributes?.hours}
+          defaultValue={attributes.defaultHours}
           name="hours"
           aria-label={attributes?.hours}
         />
@@ -119,6 +127,7 @@ export default function save({ attributes }) {
           min={0}
           max={7}
           value={attributes?.days}
+          defaultValue={attributes.defaultDays}
           name="days"
           aria-label={attributes?.days}
         />
