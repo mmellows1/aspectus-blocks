@@ -41,6 +41,18 @@
       "type": "string",
       "default": "Profit per unit"
     },
+    "hoursInAWeek": {
+      "type": "string",
+      "default": "Hours in a week"
+    },
+    "extraHours": {
+      "type": "string",
+      "default": "Extra hours"
+    },
+    "extraUnitsPerWeek": {
+      "type": "string",
+      "default": "Extra units per week"
+    },
     "baseCurrency": {
       "type": "string",
       "default": "GBP"
@@ -60,8 +72,8 @@
   },
   "supports": {
     "html": false,
-    "align": ["wide", "full"],
-    "defaultAlign": "wide"
+    "align": ["full"],
+    "alignWide": false
   },
   "textdomain": "roi-calculator",
   "editorScript": "file:./index.js",

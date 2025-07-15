@@ -370,7 +370,19 @@ export default function Edit({ attributes, setAttributes }) {
               value=""
               className="wp-block-create-block-roi-calculator__calculation-label wp-block-create-block-roi-calculator__calculation-label--small"
             >
-              Hours in a week 24/7
+              <Flex justify="center">
+                <FlexItem>
+                  <RichText
+                    placeholder="Enter a label (e.g. Hours in a week 24/7)"
+                    value={attributes.hoursInAWeek}
+                    className="wp-block-create-block-roi-calculator__calculation-label wp-block-create-block-roi-calculator__calculation-label--small"
+                    onChange={(hoursInAWeek) => setAttributes({ hoursInAWeek })}
+                  />
+                </FlexItem>
+                <FlexItem>
+                  <Icon icon={edit} fill="white" />
+                </FlexItem>
+              </Flex>
             </div>
             <span className="wp-block-create-block-roi-calculator__calculation-value wp-block-create-block-roi-calculator__calculation-value-small">
               {roi?.hoursInAWeek}
@@ -381,7 +393,19 @@ export default function Edit({ attributes, setAttributes }) {
               value=""
               className="wp-block-create-block-roi-calculator__calculation-label wp-block-create-block-roi-calculator__calculation-label--small"
             >
-              Extra hours
+              <Flex justify="center">
+                <FlexItem>
+                  <RichText
+                    placeholder="Enter a label (e.g. Extra hours)"
+                    value={attributes.extraHours}
+                    className="wp-block-create-block-roi-calculator__calculation-label wp-block-create-block-roi-calculator__calculation-label--small"
+                    onChange={(extraHours) => setAttributes({ extraHours })}
+                  />
+                </FlexItem>
+                <FlexItem>
+                  <Icon icon={edit} fill="white" />
+                </FlexItem>
+              </Flex>
             </div>
             <span className="wp-block-create-block-roi-calculator__calculation-value wp-block-create-block-roi-calculator__calculation-value-small">
               {roi?.extraHours}
@@ -392,7 +416,21 @@ export default function Edit({ attributes, setAttributes }) {
               value=""
               className="wp-block-create-block-roi-calculator__calculation-label wp-block-create-block-roi-calculator__calculation-label--small"
             >
-              Extra Units per week
+              <Flex justify="center">
+                <FlexItem>
+                  <RichText
+                    placeholder="Enter a label (e.g. Extra Units per week)"
+                    value={attributes.extraUnitsPerWeek}
+                    className="wp-block-create-block-roi-calculator__calculation-label wp-block-create-block-roi-calculator__calculation-label--small"
+                    onChange={(extraUnitsPerWeek) =>
+                      setAttributes({ extraUnitsPerWeek })
+                    }
+                  />
+                </FlexItem>
+                <FlexItem>
+                  <Icon icon={edit} fill="white" />
+                </FlexItem>
+              </Flex>
             </div>
             <span className="wp-block-create-block-roi-calculator__calculation-value wp-block-create-block-roi-calculator__calculation-value-small">
               {roi?.extraUnitsPerWeek}

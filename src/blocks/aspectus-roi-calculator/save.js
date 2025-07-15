@@ -183,7 +183,7 @@ export default function save({ attributes }) {
               value=""
               className="wp-block-create-block-roi-calculator__calculation-label wp-block-create-block-roi-calculator__calculation-label--small"
             >
-              Hours in a week 24/7
+              {attributes.hoursInAWeek}
             </div>
             <span className="wp-block-create-block-roi-calculator__calculation-value wp-block-create-block-roi-calculator__calculation-value-small">
               60.00
@@ -194,7 +194,7 @@ export default function save({ attributes }) {
               value=""
               className="wp-block-create-block-roi-calculator__calculation-label wp-block-create-block-roi-calculator__calculation-label--small"
             >
-              Extra hours
+              {attributes.extraHours}
             </div>
             <span className="wp-block-create-block-roi-calculator__calculation-value wp-block-create-block-roi-calculator__calculation-value-small">
               0.60
@@ -205,7 +205,7 @@ export default function save({ attributes }) {
               value=""
               className="wp-block-create-block-roi-calculator__calculation-label wp-block-create-block-roi-calculator__calculation-label--small"
             >
-              Extra Units per week
+              {attributes.extraUnitsPerWeek}
             </div>
             <span className="wp-block-create-block-roi-calculator__calculation-value wp-block-create-block-roi-calculator__calculation-value-small">
               13,500
