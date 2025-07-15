@@ -53,12 +53,6 @@ export default ({ attributes, setAttributes }) => {
           max={24}
           onChange={(defaultHours) => setAttributes({ defaultHours })}
         />
-        <NumberControl
-          label="Profit per unit step"
-          help="Set how much the profit per unit range steps between each unit (default 0.1)"
-          value={attributes?.unitStep}
-          onChange={(unitStep) => setAttributes({ unitStep })}
-        />
       </PanelBody>
     </InspectorControls>
   );

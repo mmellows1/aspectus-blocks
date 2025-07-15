@@ -53,10 +53,6 @@
       "type": "number",
       "default": 8
     },
-    "unitStep": {
-      "type": "string",
-      "default": 0.1
-    },
     "theme": {
       "type": "string",
       "default": "mint"
@@ -64,7 +60,8 @@
   },
   "supports": {
     "html": false,
-    "align": true
+    "align": ["wide", "full"],
+    "defaultAlign": "wide"
   },
   "textdomain": "roi-calculator",
   "editorScript": "file:./index.js",

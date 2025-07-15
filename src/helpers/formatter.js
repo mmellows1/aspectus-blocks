@@ -5,7 +5,7 @@ export const formatComma = (num) => {
 export const formatUnits = (value) => {
   const number = parseFloat(value);
   if (isNaN(number)) return "";
-  return number.toLocaleString(undefined, {
+  return number.toLocaleString("en-US", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
